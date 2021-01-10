@@ -20,7 +20,9 @@ app.get('', (req, res) => {
     handler used response dot send to send back a text response and that is exactly what we're seeing inside
     of the browser.
     */
-    res.send('Hello express!'); //display on browser
+
+    //display on browser
+    res.send('<h1> Weather </h1>');
 
 });
 
