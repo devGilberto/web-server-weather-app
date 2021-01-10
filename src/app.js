@@ -100,6 +100,42 @@ app.get('/weather', (req, res) => {
 
 
 
+
+app.get('/help/*', (req, res) =>{
+
+    res.render('404',
+        {
+            title: '404',
+            name: 'Gilberto Fernandes',
+            errorMessage: 'Help article Not Found.'
+        }
+    );
+});
+
+//last Route !!!!
+/*
+    Why?
+        Why does app dot get need to come last after all other routes are set up.
+        Well this has to do with how Express is going to end up matching the incoming request with the correct
+        route handler when Express gets an incoming request it starts to look for a match.
+
+
+    *  -> everything is a match
+*/
+app.get('*', (req, res) =>{
+    res.render('404',
+        {
+            title: '404',
+            name: 'Gilberto Fernandes',
+            errorMessage: '404 Page Not Found.'
+        }
+    );
+});
+
+
+
+// ================================================
+//  === START SERVER ===
 //(<port>, callback)
 // callback function which just runs when the server is up and running.
 //localhost:3000
