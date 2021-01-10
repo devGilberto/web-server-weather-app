@@ -1,53 +1,24 @@
+const path = require('path'); //nodejs core module
 const express = require('express');
 
-const app = express();
+// console.log(__dirname)
+// console.log(path.join(__dirname, './public'));
 
+const app = express();
+const publicDirectoryPath = path.join(__dirname, '../public');
+
+ 
 //app.com
 //app.com/help
 //app.com/about
 
-
+//Start Server in a public directory
+app.use(express.static(publicDirectoryPath));
 
 /*
 req - The first is an object containing information about the incoming request to the server.
 res - So this contains a bunch of methods allowing us to customize what we're going to send back to the requester.
 */
-//1st Route
-app.get('', (req, res) => {
-   /* 
-    found the matching router and route
-    the matching route which is this one for the route and it processed the request using our handler the
-    handler used response dot send to send back a text response and that is exactly what we're seeing inside
-    of the browser.
-    */
-
-    //display on browser
-    res.send('<h1> Weather 1 </h1>');
-
-});
-
-//2st Route
-app.get('/help', (req, res) => {
-    res.send(
-        [
-        {
-            name: 'Gilberto',
-            age: 24
-        },
-        {
-            name: 'Andrew',
-            age: 27
-        },
-        ]
-    ); 
-});
-
-
-//3st Route
-app.get('/about', (req, res) => {
-    res.send('<h1> About </h1>'); 
-});
-
 // Weather Page Route
 app.get('/weather', (req, res) => {
     res.send(
