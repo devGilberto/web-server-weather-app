@@ -1,5 +1,21 @@
+/* Partials with handlebars partials
+That's where a partial comes from.
+So think about parts of the web page that you're gonna end up 
+reusing across multiple pages in your site.
+This would be things like headers or footers where you want the exact same thing 
+showing on every page
+to give your site a nice unified feel.
+
+
+
+nodemon src/app.js -e js,hbs
+
+*/
+
+
 const path = require('path'); //nodejs core module
 const express = require('express');
+const hbs = require('hbs')
 
 // console.log(__dirname)
 // console.log(path.join(__dirname, './public'));
@@ -8,7 +24,8 @@ const app = express();
 
 //Define paths for Express config
 const publicDirectoryPath = path.join(__dirname, '../public');
-const viewsPath = path.join(__dirname, '../templates'); //customizing Views Directory
+const viewsPath = path.join(__dirname, '../templates/views'); //customizing Views Directory
+const partialsPath = path.join(__dirname, '../templates/partials'); //partials Directory
  
 //app.com
 //app.com/help
@@ -18,6 +35,9 @@ const viewsPath = path.join(__dirname, '../templates'); //customizing Views Dire
 //Setup handlebars engine and views location
 app.set('view engine', 'hbs');
 app.set('views', viewsPath); //customizing Views Directory
+hbs.registerPartials(partialsPath); //config partials
+
+
 
 //Start Server in a public directory
 // Setup static directory to serve
@@ -34,7 +54,7 @@ app.get('', (req, res) => {
     res.render('index', 
         {
             title: 'Weather App',
-            name: 'Andrew Mead'
+            name: 'Gilberto Fernandes'
         }    
     ); //(<nameOfViewWithoutFileExtension>, <objectContainsValuesToThroughtToView>)
  
@@ -47,6 +67,7 @@ app.get('/about', (req, res) => {
     res.render('about', 
         {
             title: 'About',
+            name: 'Gilberto Fernandes',
             imgSrc: '/img/robot.png'
         }
     );
@@ -58,7 +79,9 @@ app.get('/about', (req, res) => {
 app.get('/help', (req, res) => {
     res.render('help', 
         {
-            title: 'Help Page'
+            title: 'Help Page',
+            name: 'Gilberto Fernandes',
+            helpText: ' This is some helpful text.'
         }
     );
 
