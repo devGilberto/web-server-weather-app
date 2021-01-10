@@ -12,6 +12,9 @@ const publicDirectoryPath = path.join(__dirname, '../public');
 //app.com/help
 //app.com/about
 
+//template engine  /views
+app.set('view engine', 'hbs');
+
 //Start Server in a public directory
 app.use(express.static(publicDirectoryPath));
 
@@ -19,6 +22,44 @@ app.use(express.static(publicDirectoryPath));
 req - The first is an object containing information about the incoming request to the server.
 res - So this contains a bunch of methods allowing us to customize what we're going to send back to the requester.
 */
+
+//Index Page Route
+app.get('', (req, res) => {
+    
+    res.render('index', 
+        {
+            title: 'Weather App',
+            name: 'Andrew Mead'
+        }    
+    ); //(<nameOfViewWithoutFileExtension>, <objectContainsValuesToThroughtToView>)
+ 
+});
+
+
+//About Page Route
+app.get('/about', (req, res) => {
+
+    res.render('about', 
+        {
+            title: 'About',
+            imgSrc: '/img/robot.png'
+        }
+    );
+
+});
+
+
+//Help Page Route
+app.get('/help', (req, res) => {
+    res.render('help', 
+        {
+            title: 'Help Page'
+        }
+    );
+
+});
+
+
 // Weather Page Route
 app.get('/weather', (req, res) => {
     res.send(
