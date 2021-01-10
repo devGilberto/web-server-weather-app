@@ -22,24 +22,40 @@ app.get('', (req, res) => {
     */
 
     //display on browser
-    res.send('<h1> Weather </h1>');
+    res.send('<h1> Weather 1 </h1>');
 
 });
 
 //2st Route
 app.get('/help', (req, res) => {
-    res.send('Help page express!'); 
+    res.send(
+        [
+        {
+            name: 'Gilberto',
+            age: 24
+        },
+        {
+            name: 'Andrew',
+            age: 27
+        },
+        ]
+    ); 
 });
 
 
 //3st Route
 app.get('/about', (req, res) => {
-    res.send('About'); 
+    res.send('<h1> About </h1>'); 
 });
 
 // Weather Page Route
 app.get('/weather', (req, res) => {
-    res.send('Your weahter'); 
+    res.send(
+        {
+            forecast: 'It is snowing',
+            location: 'Lisbon'
+        }
+    ); 
 });
 
 
