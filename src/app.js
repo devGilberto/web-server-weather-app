@@ -15,7 +15,10 @@ nodemon src/app.js -e js,hbs
 
 const path = require('path'); //nodejs core module
 const express = require('express');
-const hbs = require('hbs')
+const hbs = require('hbs');
+
+const geocode = require('./utils/geocode');
+const forecast = require('./utils/forecast');
 
 // console.log(__dirname)
 // console.log(path.join(__dirname, './public'));
@@ -95,6 +98,23 @@ app.get('/weather', (req, res) => {
             error: 'You must provide a address term!'
         });
     }
+
+    geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
+        if (error) {
+            return console.log(error);
+        }
+
+
+
+        forecast(latitude, longitude, (error, forecastData) => {  //44.1545, -75.7088
+            if (error) {
+                return console.log(error);
+            }
+
+            console.log(location)
+            console.log(forecastData)
+        });
+    });
 
     res.send(
         {
