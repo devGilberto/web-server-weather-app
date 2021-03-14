@@ -26,7 +26,7 @@ const app = express();
 const publicDirectoryPath = path.join(__dirname, '../public');
 const viewsPath = path.join(__dirname, '../templates/views'); //customizing Views Directory
 const partialsPath = path.join(__dirname, '../templates/partials'); //partials Directory
- 
+
 //app.com
 //app.com/help
 //app.com/about
@@ -50,21 +50,21 @@ res - So this contains a bunch of methods allowing us to customize what we're go
 
 //Index Page Route
 app.get('', (req, res) => {
-    
-    res.render('index', 
+
+    res.render('index',
         {
             title: 'Weather App',
             name: 'Gilberto Fernandes'
-        }    
+        }
     ); //(<nameOfViewWithoutFileExtension>, <objectContainsValuesToThroughtToView>)
- 
+
 });
 
 
 //About Page Route
 app.get('/about', (req, res) => {
 
-    res.render('about', 
+    res.render('about',
         {
             title: 'About',
             name: 'Gilberto Fernandes',
@@ -77,7 +77,7 @@ app.get('/about', (req, res) => {
 
 //Help Page Route
 app.get('/help', (req, res) => {
-    res.render('help', 
+    res.render('help',
         {
             title: 'Help Page',
             name: 'Gilberto Fernandes',
@@ -90,18 +90,41 @@ app.get('/help', (req, res) => {
 
 // Weather Page Route
 app.get('/weather', (req, res) => {
+    if (!req.query.address) {
+        return res.send({
+            error: 'You must provide a address term!'
+        });
+    }
+
     res.send(
         {
             forecast: 'It is snowing',
-            location: 'Lisbon'
+            location: 'Lisbon',
+            address: req.query.address
         }
-    ); 
+    );
 });
 
 
+app.get('/products', (req, res) => {
+    if (!req.query.search) {
+        return res.send({
+            error: 'You must provide a search term!'
+        })
+    }
+
+    console.log(req.query.search)
+    res.send({
+        products: []
+    });
+});
+//localhost:3000/products?key=value
+//localhost:3000/products?search=games
+//localhost:3000/products?search=games&rating=5
 
 
-app.get('/help/*', (req, res) =>{
+
+app.get('/help/*', (req, res) => {
 
     res.render('404',
         {
@@ -122,7 +145,7 @@ app.get('/help/*', (req, res) =>{
 
     *  -> everything is a match
 */
-app.get('*', (req, res) =>{
+app.get('*', (req, res) => {
     res.render('404',
         {
             title: '404',
@@ -143,5 +166,5 @@ app.listen(3000, () => {
 
     console.log('Server is up on port 3000.'); //display as usefull information when running the application
 
-});     
+});
 
