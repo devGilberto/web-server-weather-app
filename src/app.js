@@ -23,6 +23,7 @@ const forecast = require('./utils/forecast');
 // console.log(__dirname)
 // console.log(path.join(__dirname, './public'));
 
+
 const app = express();
 
 //Define paths for Express config
@@ -99,30 +100,25 @@ app.get('/weather', (req, res) => {
         });
     }
 
+
     geocode(req.query.address, (error, { latitude, longitude, location } = {}) => {
         if (error) {
-            return console.log(error);
+            return res.send({ error });
         }
-
-
 
         forecast(latitude, longitude, (error, forecastData) => {  //44.1545, -75.7088
             if (error) {
-                return console.log(error);
+                return res.send({ error });
             }
 
-            console.log(location)
-            console.log(forecastData)
+
+            res.send({
+                forecast: forecastData,
+                location,
+                address: req.query.address
+            });
         });
     });
-
-    res.send(
-        {
-            forecast: 'It is snowing',
-            location: 'Lisbon',
-            address: req.query.address
-        }
-    );
 });
 
 
